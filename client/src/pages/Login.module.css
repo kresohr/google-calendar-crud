@@ -1,3 +1,7 @@
 .error-text {
   color: red;
 }
+
+button {
+  margin-block: 1rem;
+}
