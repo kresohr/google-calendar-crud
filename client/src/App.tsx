@@ -16,8 +16,10 @@ export default function App() {
   return (
     <>
       <h1>Google Calendar Crud</h1>
-      <p>Logged in as: {user.email}</p>
-      <button onClick={logout}>Logout</button>
+      <p className="email-wrapper">Logged in as: {user.email}</p>
+      <button className="logout-btn" onClick={logout}>
+        Logout
+      </button>
       <main>
         <Outlet />
       </main>

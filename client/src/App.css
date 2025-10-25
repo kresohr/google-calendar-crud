@@ -4,3 +4,15 @@
   padding: 2rem;
   text-align: center;
 }
+
+main {
+  margin-top: 1rem;
+}
+
+.email-wrapper {
+  padding-top: 1rem;
+}
+
+.logout-btn {
+  margin-top: 1rem;
+}
