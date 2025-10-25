@@ -72,8 +72,8 @@ CREATE DATABASE calendar_db;
 # Copy example env files
 
 ```
-cp server/example.env server/.env
-cp client/example.env client/.env
+cp server/.example.env server/.env
+cp client/.example.env client/.env
 ```
 
 # Edit .env files with your credentials
