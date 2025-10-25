@@ -172,7 +172,7 @@ export class CalendarService {
           lte: end,
         },
       },
-      orderBy: { startTime: "asc" },
+      orderBy: [{ startTime: "asc" }, { createdAt: "asc" }],
     });
 
     return events;
