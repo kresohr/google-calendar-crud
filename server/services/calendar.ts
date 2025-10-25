@@ -77,6 +77,8 @@ export class CalendarService {
         endTime: new Date(event.end!.dateTime || event.end!.date!),
       }));
 
+    const googleEventIds = validEvents.map((event) => event.googleId);
+
     const result = await Promise.all(
       validEvents.map((eventData) =>
         prisma.event.upsert({
@@ -91,6 +93,15 @@ export class CalendarService {
         })
       )
     );
+
+    await prisma.event.deleteMany({
+      where: {
+        userId,
+        googleId: {
+          notIn: googleEventIds,
+        },
+      },
+    });
 
     return result.length;
   }
