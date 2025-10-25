@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import session from "express-session";
 import authRoutes from "./routes/auth";
+import eventRoutes from "./routes/events";
 import { PrismaSessionStore } from "@quixo3/prisma-session-store";
 import prisma from "./config/database";
 
@@ -36,6 +37,7 @@ app.use(
   })
 );
 app.use(authRoutes);
+app.use(eventRoutes);
 
 app.get("/", (req, res) => {
   res.json({ message: "Server is running!" });
