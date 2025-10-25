@@ -54,22 +54,29 @@ npm install
 
 ## 3. Setup PostgreSQL
 
-### Create database
+In order for this project to work, you will need to have PostgreSQL installed and running on your device.
+
+### Create database using createdb
 
 ```
 createdb calendar_db
 ```
 
-#### Or using psql
+### Or by using psql
 
 ```
 psql -U postgres
+```
+
+```
 CREATE DATABASE calendar_db;
 ```
 
-### 4. Configure environment variables
+## 4. Configure environment variables
 
-# Copy example env files
+### Copy example env files
+
+Run this from the project root directory
 
 ```
 cp server/.example.env server/.env
@@ -79,6 +86,8 @@ cp client/.example.env client/.env
 # Edit .env files with your credentials
 
 ### 5. Setup Google OAuth
+
+**NOTE**: In order to use this app, you will have to configue Google Cloud Console application to obtain client id and client secret.
 
 1. Go to Google Cloud Console: https://console.cloud.google.com
 2. Create a new project or select existing
@@ -105,7 +114,7 @@ npx prisma migrate dev
 
 #### Terminal 1: Start backend
 
-Make sure you are in /server from root
+Make sure you are in /server
 
 ```
 cd server
@@ -114,7 +123,7 @@ npm run dev
 
 #### Terminal 2: Start frontend
 
-Make sure you are in /client from root
+Make sure you are in /client
 
 ```
 cd client
