@@ -1,6 +1,7 @@
 import express from "express";
 import { oauth2Client, SCOPES } from "../config/google";
 import { google } from "googleapis";
+import prisma from "../config/database";
 
 const router = express.Router();
 
@@ -28,11 +29,36 @@ router.get("/auth/google/callback", async (req, res) => {
     const oauth2 = google.oauth2({ version: "v2", auth: oauth2Client });
     const userInfo = await oauth2.userinfo.get();
 
+    const googleId = userInfo.data.id;
+    const email = userInfo.data.email;
+    const accessToken = tokens.access_token;
+    const refreshToken = tokens.refresh_token;
+
+    if (!googleId || !email || !accessToken || !refreshToken) {
+      console.error("Missing required OAuth data");
+      return res.redirect(`${process.env.CLIENT_URL}/login?error=auth_failed`);
+    }
+
+    const user = await prisma.user.upsert({
+      where: { googleId },
+      update: {
+        email,
+        accessToken,
+        ...(refreshToken && { refreshToken }),
+      },
+      create: {
+        googleId,
+        email,
+        accessToken,
+        refreshToken,
+      },
+    });
+
     req.session.user = {
-      id: userInfo.data.id!,
-      email: userInfo.data.email!,
-      accessToken: tokens.access_token,
-      refreshToken: tokens.refresh_token,
+      id: user.id,
+      email: user.email,
+      accessToken: user.accessToken,
+      refreshToken: user.refreshToken,
     };
 
     req.session.save((err) => {

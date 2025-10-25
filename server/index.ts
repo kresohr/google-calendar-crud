@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 import cors from "cors";
 import session from "express-session";
 import authRoutes from "./routes/auth";
+import { PrismaSessionStore } from "@quixo3/prisma-session-store";
+import prisma from "./config/database";
 
 dotenv.config();
 
@@ -22,6 +24,10 @@ app.use(
     secret: process.env.SESSION_SECRET!,
     resave: false,
     saveUninitialized: false,
+    store: new PrismaSessionStore(prisma, {
+      checkPeriod: 2 * 60 * 1000,
+      dbRecordIdIsSessionId: true,
+    }),
     cookie: {
       httpOnly: true,
       secure: false,
