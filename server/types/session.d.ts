@@ -5,8 +5,8 @@ declare module "express-session" {
     user?: {
       id: string;
       email: string;
-      accessToken: string | null | undefined;
-      refreshToken: string | null | undefined;
+      accessToken: string;
+      refreshToken: string;
     };
   }
 }
